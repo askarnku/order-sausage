@@ -6,7 +6,7 @@ import json
 from concurrent.futures import ThreadPoolExecutor
 
 # ─── CONFIGURATION ──────────────────────────────────────────────────────────────
-BASE_URL = "https://sausage-store.mamytov-askar-006.k8s.praktikum-services.tech"
+BASE_URL = ""  # Ввести URL
 URL = f"{BASE_URL}/api/orders"
 
 HEADERS = {
