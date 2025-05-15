@@ -1,0 +1,68 @@
+name: Simple CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  setup:
+    name: Environment Setup
+    runs-on: [self-hosted, ubuntu.home]
+
+    steps:
+      - name: Print system info
+        run: |
+          echo "Hostname: $(hostname)"
+          echo "Uptime:"
+          uptime
+          echo "Disk space:"
+          df -h
+
+  build:
+    name: Build Simulation
+    runs-on: [self-hosted, ubuntu.home]
+    needs: setup
+
+    steps:
+      - name: Fake compile step
+        run: |
+          echo "Compiling..."
+          sleep 2
+          echo "Build complete."
+
+  test:
+    name: Run Calculations
+    runs-on: [self-hosted, ubuntu.home]
+    needs: build
+
+    steps:
+      - name: Fibonacci calculator
+        run: |
+          fib() {
+            a=0
+            b=1
+            for ((i=0; i<$1; i++)); do
+              echo -n "$a "
+              fn=$((a + b))
+              a=$b
+              b=$fn
+            done
+            echo ""
+          }
+
+          echo "Calculating first 10 Fibonacci numbers:"
+          fib 10
+
+  deploy:
+    name: Fake Deploy Step
+    runs-on: [self-hosted, ubuntu.home]
+    needs: test
+
+    steps:
+      - name: Simulate deployment
+        run: |
+          echo "Deploying to test environment..."
+          sleep 1
+          echo "Deployment complete!"
